@@ -16,101 +16,103 @@ import dev.b3nedikt.restring.Restring;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AppCompatDelegate appCompatDelegate;
-    private AppCompatDelegate getAppCompatDelegate() {
-        if (appCompatDelegate == null) {
-            appCompatDelegate = new ViewPumpAppCompatDelegate(
-                    super.getDelegate(),
-                    this,
-                    Restring::wrapContext
-            );
-        }
-        return appCompatDelegate;
-    }
+	private AppCompatDelegate appCompatDelegate;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	private AppCompatDelegate getAppCompatDelegate() {
+		if (appCompatDelegate == null) {
+			appCompatDelegate = new ViewPumpAppCompatDelegate(
+					super.getDelegate(),
+					this,
+					Restring::wrapContext
+			);
+		}
+		return appCompatDelegate;
+	}
 
-        String language = ((MyApplication)getApplication()).getLanguage();
-        setLanguage(language);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-        // Подключаем нашу разметку
-        setContentView(R.layout.activity_main);
+		String language = ((MyApplication) getApplication()).getLanguage();
+		setLanguage(language);
 
-        // Находим TextView, которым нужно задать текст из кода
-        TextView text3 = findViewById(R.id.text3);
-        TextView text4 = findViewById(R.id.text4);
+		// Подключаем нашу разметку
+		setContentView(R.layout.activity_main);
 
-        // Задаем текст из кода
-        text3.setText(R.string.string3);
-        text4.setText(R.string.string4);
+		// Находим TextView, которым нужно задать текст из кода
+		TextView text3 = findViewById(R.id.text3);
+		TextView text4 = findViewById(R.id.text4);
 
-        Button btnShowDialog = findViewById(R.id.btnShowDialog);
-        btnShowDialog.setOnClickListener(v -> showActionsDialog());
+		// Задаем текст из кода
+		text3.setText(R.string.string3);
+		text4.setText(R.string.string4);
 
-    }
+		Button btnShowDialog = findViewById(R.id.btnShowDialog);
+		btnShowDialog.setOnClickListener(v -> showActionsDialog());
 
-    private void showActionsDialog() {
-        // Массив строк для пунктов меню
-        String[] actions = {
-                "Русский",
-                "Английский",
-                "Испанский",
-                "Французский"
-        };
+	}
 
-        // Создаем AlertDialog
-        new AlertDialog.Builder(this)
-                .setTitle("Выберите язык")
-                .setItems(actions, (dialog, which) -> {
-                    // which - это индекс выбранного пункта (0, 1, 2 или 3)
-                    handleAction(which);
-                })
-                .setNegativeButton("Отмена", (dialog, which) -> dialog.dismiss())
-                .show();
-    }
-    private void handleAction(int actionIndex) {
-        String[] l_codes = {
-                "ru", "en", "es", "fr"
-        };
-        String message;
-        switch (actionIndex) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-                changeLanguage(l_codes[actionIndex]);
-            default:
-                message = "Неизвестное действие";
-                break;
-        }
-    }
+	private void showActionsDialog() {
+		// Массив строк для пунктов меню
+		String[] actions = {
+				"Русский",
+				"Английский",
+				"Испанский",
+				"Французский"
+		};
 
-    public String getLanguage() {
-        return ((MyApplication)getApplication()).getLanguage();
-    }
+		// Создаем AlertDialog
+		new AlertDialog.Builder(this)
+				.setTitle("Выберите язык")
+				.setItems(actions, (dialog, which) -> {
+					// which - это индекс выбранного пункта (0, 1, 2 или 3)
+					handleAction(which);
+				})
+				.setNegativeButton("Отмена", (dialog, which) -> dialog.dismiss())
+				.show();
+	}
 
-    public void changeLanguage(String language) {
-        ((MyApplication)getApplication()).setLanguage(language);
-        recreate();
-    }
+	private void handleAction(int actionIndex) {
+		String[] l_codes = {
+				"ru", "en", "es", "fr"
+		};
+		String message;
+		switch (actionIndex) {
+			case 0:
+			case 1:
+			case 2:
+			case 3:
+				changeLanguage(l_codes[actionIndex]);
+			default:
+				message = "Неизвестное действие";
+				break;
+		}
+	}
 
-    public void setLanguage(String language) {
+	public String getLanguage() {
+		return ((MyApplication) getApplication()).getLanguage();
+	}
 
-        LocaleListCompat appLocale = LocaleListCompat.forLanguageTags(language);
-        AppCompatDelegate.setApplicationLocales(appLocale);
-        TranslationHelper.loadLanguage(this, language);
-    }
+	public void setLanguage(String language) {
 
-    @NonNull
-    @Override
-    public AppCompatDelegate getDelegate() {
-        return getAppCompatDelegate();
-    }
+		LocaleListCompat appLocale = LocaleListCompat.forLanguageTags(language);
+		AppCompatDelegate.setApplicationLocales(appLocale);
+		TranslationHelper.loadLanguage(this, language);
+	}
 
-    @Override
-    public Resources getResources() {
-        return Restring.wrapResources(getApplicationContext(), super.getResources());
-    }
+	public void changeLanguage(String language) {
+		((MyApplication) getApplication()).setLanguage(language);
+		recreate();
+	}
+
+	@NonNull
+	@Override
+	public AppCompatDelegate getDelegate() {
+		return getAppCompatDelegate();
+	}
+
+	@Override
+	public Resources getResources() {
+		return Restring.wrapResources(getApplicationContext(), super.getResources());
+	}
 }
