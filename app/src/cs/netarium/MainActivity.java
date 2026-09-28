@@ -53,39 +53,22 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	private void showActionsDialog() {
-		// Массив строк для пунктов меню
-		String[] actions = {
-				"Русский",
-				"Английский",
-				"Испанский",
-				"Французский"
-		};
-
-		// Создаем AlertDialog
+		// Создаем AlertDialog, пункты меню — названия языков из R.array.language_names
 		new AlertDialog.Builder(this)
-				.setTitle("Выберите язык")
-				.setItems(actions, (dialog, which) -> {
-					// which - это индекс выбранного пункта (0, 1, 2 или 3)
+				.setTitle(R.string.language_dialog_title)
+				.setItems(R.array.language_names, (dialog, which) -> {
+					// which - это индекс выбранного пункта в R.array.language_names
 					handleAction(which);
 				})
-				.setNegativeButton("Отмена", (dialog, which) -> dialog.dismiss())
+				.setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss())
 				.show();
 	}
 
 	private void handleAction(int actionIndex) {
-		String[] l_codes = {
-				"ru", "en", "es", "fr"
-		};
-		String message;
-		switch (actionIndex) {
-			case 0:
-			case 1:
-			case 2:
-			case 3:
-				changeLanguage(l_codes[actionIndex]);
-			default:
-				message = "Неизвестное действие";
-				break;
+		// Коды языков лежат в том же порядке, что и названия в R.array.language_names
+		String[] languageCodes = getResources().getStringArray(R.array.language_codes);
+		if (actionIndex >= 0 && actionIndex < languageCodes.length) {
+			changeLanguage(languageCodes[actionIndex]);
 		}
 	}
 

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Android Java Skeleton</string>
+    <string name="app_name" translatable="false">Android Java Skeleton</string>
     <string name="string1">строка1</string>
     <string name="string2">строка2</string>
     <string name="string3">строка3</string>
     <string name="string4">строка4</string>
     <string name="change_language">сменить язык</string>
+    <string name="language_dialog_title">Выберите язык</string>
+    <string name="cancel">Отмена</string>
 </resources>
