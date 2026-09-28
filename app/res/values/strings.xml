@@ -5,4 +5,5 @@
     <string name="string2">строка2</string>
     <string name="string3">строка3</string>
     <string name="string4">строка4</string>
+    <string name="change_language">сменить язык</string>
 </resources>

@@ -1,8 +1,6 @@
 package cs.netarium;
 
 import android.app.Application;
-import android.content.res.Resources;
-import android.util.Log;
 
 import dev.b3nedikt.restring.Restring;
 import dev.b3nedikt.restring.repository.MemoryStringsRepository;
@@ -11,7 +9,7 @@ import dev.b3nedikt.viewpump.ViewPump;
 
 public class MyApplication extends Application {
 
-    private String language = "en";
+    private String language = "es";
 
     @Override
     public void onCreate() {

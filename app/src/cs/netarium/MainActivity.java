@@ -1,47 +1,23 @@
 package cs.netarium;
 
-import android.content.Context;
-import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.app.ViewPumpAppCompatDelegate;
 import androidx.core.os.LocaleListCompat;
-
-import java.util.Locale;
 
 import dev.b3nedikt.restring.Restring;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppCompatDelegate appCompatDelegate;
-
-    // Кэш решения: отключён ли Restring для текущего языка (ru/en).
-    // Вычисляется лениво, т.к. getResources()/getDelegate() вызываются раньше onCreate().
-    private Boolean _restringDisabled = false;
-
-    /**
-     * Возвращает true, если для текущего языка (русский или английский) система
-     * переводов Restring должна быть полностью отключена: не инициализироваться и
-     * не оборачивать ресурсы/контекст. В этом случае строки берутся напрямую из
-     * штатных ресурсов приложения (res/values, res/values-en), без кэша Restring.
-     */
-    private boolean restringDisabled() {
-        if (_restringDisabled == null) {
-            _restringDisabled = getLanguage().equals("en") || getLanguage().equals("ru");
-        }
-        return _restringDisabled;
-    }
-
     private AppCompatDelegate getAppCompatDelegate() {
-        // Для ru/en не используем ViewPump/Reword-обёртку — Restring не задействован.
-        if (restringDisabled())
-            return super.getDelegate();
         if (appCompatDelegate == null) {
             appCompatDelegate = new ViewPumpAppCompatDelegate(
                     super.getDelegate(),
@@ -69,6 +45,55 @@ public class MainActivity extends AppCompatActivity {
         // Задаем текст из кода
         text3.setText(R.string.string3);
         text4.setText(R.string.string4);
+
+        Button btnShowDialog = findViewById(R.id.btnShowDialog);
+        btnShowDialog.setOnClickListener(v -> showActionsDialog());
+
+    }
+
+    private void showActionsDialog() {
+        // Массив строк для пунктов меню
+        String[] actions = {
+                "Русский",
+                "Английский",
+                "Испанский",
+                "Французский"
+        };
+
+        // Создаем AlertDialog
+        new AlertDialog.Builder(this)
+                .setTitle("Выберите язык")
+                .setItems(actions, (dialog, which) -> {
+                    // which - это индекс выбранного пункта (0, 1, 2 или 3)
+                    handleAction(which);
+                })
+                .setNegativeButton("Отмена", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
+    private void handleAction(int actionIndex) {
+        String[] l_codes = {
+                "ru", "en", "es", "fr"
+        };
+        String message;
+        switch (actionIndex) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+                changeLanguage(l_codes[actionIndex]);
+            default:
+                message = "Неизвестное действие";
+                break;
+        }
+    }
+
+    public String getLanguage() {
+        return ((MyApplication)getApplication()).getLanguage();
+    }
+
+    public void changeLanguage(String language) {
+        ((MyApplication)getApplication()).setLanguage(language);
+        recreate();
     }
 
     public void setLanguage(String language) {
@@ -86,9 +111,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public Resources getResources() {
-        // Для ru/en возвращаем штатные ресурсы без обёртки Restring.
-        if (restringDisabled())
-            return super.getResources();
         return Restring.wrapResources(getApplicationContext(), super.getResources());
     }
 }
