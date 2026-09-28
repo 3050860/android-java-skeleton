@@ -11,6 +11,12 @@ android {
     compileSdkVersion 37
     dependencies {
         implementation 'androidx.appcompat:appcompat:1.8.0'
+        // Replace bundled strings dynamically
+        implementation 'dev.b3nedikt.restring:restring:6.0.0'
+        // Intercept view inflation
+        implementation 'dev.b3nedikt.viewpump:viewpump:4.0.15'
+        // Allows to update the text of views at runtime without recreating the activity
+        implementation 'dev.b3nedikt.reword:reword:4.0.4'
     }
 
 

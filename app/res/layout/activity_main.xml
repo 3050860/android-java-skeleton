@@ -10,7 +10,7 @@
         android:id="@+id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/first_string"
+        android:text="@string/string1"
         android:textSize="18sp"
         android:layout_marginBottom="12dp" />
 
@@ -18,7 +18,7 @@
         android:id="@+id/text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/second_string"
+        android:text="@string/string2"
         android:textSize="18sp"
         android:layout_marginBottom="24dp" /> <!-- Увеличили отступ перед следующей группой -->
 
