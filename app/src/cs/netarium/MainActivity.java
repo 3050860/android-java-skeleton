@@ -11,37 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.app.ViewPumpAppCompatDelegate;
+import androidx.core.os.LocaleListCompat;
 
 import java.util.Locale;
 
 import dev.b3nedikt.restring.Restring;
 
 public class MainActivity extends AppCompatActivity {
-
-    protected void attachBaseContext(Context newBase) {
-        // Подменяем контекст на контекст с французской локалью
-//        Context localizedContext = setAppLocale(newBase, getLanguage());
-        Context localizedContext = setAppLocale(newBase, "fr");
-        super.attachBaseContext(localizedContext);
-    }
-
-    // 2. Вспомогательный метод для смены локали
-    private Context setAppLocale(Context context, String language) {
-        Locale locale = new Locale(language);
-        Locale.setDefault(locale);
-
-        Configuration config = context.getResources().getConfiguration();
-
-        // Для Android 7.0 (API 24) и выше
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            config.setLocale(locale);
-            return context.createConfigurationContext(config);
-        }
-        return context;
-   }
-
-//    private String language = "ru";
-
 
     private AppCompatDelegate appCompatDelegate;
 
@@ -80,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        setLanguage("es");
+        String language = ((MyApplication)getApplication()).getLanguage();
+        setLanguage(language);
 
         // Подключаем нашу разметку
         setContentView(R.layout.activity_main);
@@ -94,15 +71,12 @@ public class MainActivity extends AppCompatActivity {
         text4.setText(R.string.string4);
     }
 
-    public String getLanguage() {
-        return ((MyApplication)getApplication()).getLanguage();
-    }
+    public void setLanguage(String language) {
 
-//    public void setLanguage(String language) {
-//        this.language = language;
-//
-//        TranslationHelper.loadLanguage(this, language);
-//    }
+        LocaleListCompat appLocale = LocaleListCompat.forLanguageTags(language);
+        AppCompatDelegate.setApplicationLocales(appLocale);
+        TranslationHelper.loadLanguage(this, language);
+    }
 
     @NonNull
     @Override

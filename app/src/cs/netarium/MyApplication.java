@@ -11,7 +11,7 @@ import dev.b3nedikt.viewpump.ViewPump;
 
 public class MyApplication extends Application {
 
-    private String language = "ru";
+    private String language = "en";
 
     @Override
     public void onCreate() {
