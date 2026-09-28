@@ -10,7 +10,7 @@ def verName = versionProps['VERSION_NAME'] ?: "unknown_version"
 android {
     compileSdkVersion 37
     dependencies {
-        implementation 'androidx.appcompat:appcompat:1.6.1'
+        implementation 'androidx.appcompat:appcompat:1.8.0'
     }
 
 

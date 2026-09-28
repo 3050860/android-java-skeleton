@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Android Java Skeleton</string>
-    <string name="hello_xml">Привет из XML-разметки!</string>
-    <string name="hello_code">Привет из Java-кода!</string>
+    <string name="first_string">строка1</string>
+    <string name="second_string">строка2</string>
 </resources>
