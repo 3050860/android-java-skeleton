@@ -30,10 +30,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         String language = ((MyApplication)getApplication()).getLanguage();
         setLanguage(language);
+
+        super.onCreate(savedInstanceState);
+
+        android.util.Log.d("LANGLOOP", "onCreate lang=" + MyApplication.getLanguage()
+                + " restringLocale=" + Restring.getLocale()
+                + " providerInitial=" + Restring.getLocaleProvider().isInitial()
+                + " configLocale=" + getResources().getConfiguration().getLocales().get(0));
 
         // Подключаем нашу разметку
         setContentView(R.layout.activity_main);
@@ -81,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
             case 2:
             case 3:
                 changeLanguage(l_codes[actionIndex]);
+                break;
             default:
                 message = "Неизвестное действие";
                 break;
@@ -96,21 +102,40 @@ public class MainActivity extends AppCompatActivity {
         recreate();
     }
 
+//    public void setLanguage(String language) {
+//        TranslationHelper.loadLanguage(this, language);
+//        LocaleListCompat appLocale = LocaleListCompat.forLanguageTags(language);
+//        AppCompatDelegate.setApplicationLocales(appLocale);
+//
+//    }
     public void setLanguage(String language) {
-
-        LocaleListCompat appLocale = LocaleListCompat.forLanguageTags(language);
-        AppCompatDelegate.setApplicationLocales(appLocale);
-        TranslationHelper.loadLanguage(this, language);
+        if (TranslationHelper.isNativeLanguage(language)) {
+            // ru/en: штатные ресурсы, локаль через AndroidX
+            TranslationHelper.loadLanguage(this, language);   // сброс Restring.setLocale
+            AppCompatDelegate.setApplicationLocales(
+                    LocaleListCompat.forLanguageTags(language));
+        } else {
+            // es/fr: ресурсы через Restring, локаль через Restring
+            TranslationHelper.loadLanguage(this, language);
+            AppCompatDelegate.setApplicationLocales(
+                    LocaleListCompat.forLanguageTags(language));
+        }
     }
-
     @NonNull
     @Override
     public AppCompatDelegate getDelegate() {
+        if (MyApplication.isNativeLocale()) {
+            return super.getDelegate();  // ru/en -> штатный AppCompat, без Restring
+        }
         return getAppCompatDelegate();
     }
 
     @Override
     public Resources getResources() {
-        return Restring.wrapResources(getApplicationContext(), super.getResources());
+        android.util.Log.d("LANGLOOP", "getResources isNative=" + MyApplication.isNativeLocale());
+        if (MyApplication.isNativeLocale()) {
+            return super.getResources();  // ru/en -> штатный AppCompat, без Restring
+        }
+        return Restring.wrapResources(this, super.getResources());
     }
 }

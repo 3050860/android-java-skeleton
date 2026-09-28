@@ -30,6 +30,7 @@ public class TranslationHelper {
         // (JSON из assets + Restring): для этих языков применяются штатные
         // строковые ресурсы Android (res/values, res/values-en).
         if (isNativeLanguage(languageCode)) {
+//            Restring.setLocale(createLocale(languageCode));
             return;
         }
 
@@ -52,8 +53,8 @@ public class TranslationHelper {
                 stringMap.put(key, translations.getString(key));
             }
 
-            // Заменяем строки для всех локалей или конкретной
-            Restring.putStrings(Locale.getDefault(), stringMap);
+//            Restring.setLocale(locale);
+            Restring.putStrings(locale, stringMap);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -72,7 +73,7 @@ public class TranslationHelper {
         return "ru".equals(lang) || "en".equals(lang);
     }
 
-    private static Locale createLocale(String languageCode) {
+    static Locale createLocale(String languageCode) {
         if (languageCode.contains("-") || languageCode.contains("_")) {
             String[] parts = languageCode.split("[-_]");
             return new Locale(parts[0], parts.length > 1 ? parts[1] : "");
