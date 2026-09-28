@@ -1,0 +1,79 @@
+apply plugin: 'com.android.application'
+
+def versionPropsFile = rootProject.file('version.prop')
+def versionProps = new Properties()
+versionPropsFile.withInputStream { stream ->
+    versionProps.load(stream)
+}
+def verName = versionProps['VERSION_NAME'] ?: "unknown_version"
+
+android {
+    compileSdkVersion 37
+    dependencies {
+        implementation 'androidx.appcompat:appcompat:1.6.1'
+    }
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+//    signingConfigs {
+//        release {
+//            keyAlias 'android'
+//            keyPassword 'qZsl7890kh'
+//            storeFile file("../key/khabarov.jks")
+//            storePassword 'qZsl7890kh'
+//            v1SigningEnabled = true
+//            v2SigningEnabled = true
+//        }
+//        debug {
+//            keyAlias 'android'
+//            keyPassword 'qZsl7890kh'
+//            storeFile file("../key/khabarov.jks")
+//            storePassword 'qZsl7890kh'
+//            v1SigningEnabled = true
+//            v2SigningEnabled = true
+//        }
+//    }
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            jniLibs.srcDirs = ['jniLibs']
+            res.srcDirs = ['res']
+            aidl.srcDirs = ['aidl']
+            assets.srcDirs = ['assets']
+        }
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
+
+    defaultConfig {
+        versionCode versionProps['VERSION_CODE'].toInteger()
+        versionName "${verName}"
+        minSdk 28
+        targetSdkVersion 33
+        applicationId 'cs.netarium.javaskeleton'
+    }
+    namespace = "cs.netarium"
+    buildTypes {
+//        release {
+//    	    signingConfig = signingConfigs.release
+//        }
+//        debug {
+//    	    signingConfig = signingConfigs.debug
+//        }
+    }
+    buildFeatures {
+//        aidl = true
+//        // Нужен для BuildConfig.DEFAULT_UI_BUILDER; в AGP 8+ по умолчанию выключен.
+//        buildConfig = true
+    }
+    lint {
+        abortOnError = false
+        disable 'ResourceType', ''
+    }
+}

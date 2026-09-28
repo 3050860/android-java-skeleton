@@ -1,0 +1,27 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven {
+            url = "https://maven.google.com"
+        }
+        google()
+
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:9.4.1'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+    }
+}
+
+
+allprojects {
+    project.buildDir = new File(System.getProperty("user.dir") + '/build/'+project.name)
+    repositories {
+        google()
+        mavenCentral()
+        mavenLocal()
+    }
+}
+
+
