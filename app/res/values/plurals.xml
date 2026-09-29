@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="ru">
+	<!-- Демо множественного числа. %d — количество фильмов; для 0 есть отдельная строка no_new_movies.
+		 В ru форма one — это и 1, и 21, и 101, поэтому в ней %d, а не «1».
+		 other в ru выбирается только для дробных чисел. -->
+	<plurals name="new_movies">
+		<item quantity="one">%d новый фильм</item>
+		<item quantity="few">%d новых фильма</item>
+		<item quantity="many">%d новых фильмов</item>
+		<item quantity="other">%d нового фильма</item>
+	</plurals>
+</resources>

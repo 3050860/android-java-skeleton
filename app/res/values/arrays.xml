@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Демо массива строк: категории ТВ-контента. Выводится из кода, см. MainActivity.showArraysDemo() -->
-    <string-array name="tv_categories">
-        <item>Фильмы</item>
-        <item>Сериалы</item>
-        <item>Спорт</item>
-        <item>Детям</item>
-        <item>Музыка</item>
-    </string-array>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="ru">
+	<!-- Демо массива строк: категории ТВ-контента. Выводится из кода, см. MainActivity.showArraysDemo() -->
+	<string-array name="tv_categories">
+		<item>Фильмы</item>
+		<item>Сериалы</item>
+		<item>Спорт</item>
+		<item>Детям</item>
+		<item>Музыка</item>
+	</string-array>
 </resources>

@@ -11,9 +11,18 @@
         "lang_es": "Español",
         "lang_fr": "Francés",
         "cancel": "Cancelar",
-        "demo_arrays_title": "Matrices de cadenas"
+        "demo_arrays_title": "Matrices de cadenas",
+        "demo_plurals_title": "Plurales",
+        "no_new_movies": "No hay películas nuevas"
     },
     "arrays": {
         "tv_categories": ["Películas", "Series", "Deportes", "Infantil", "Música"]
+    },
+    "plurals": {
+        "new_movies": {
+            "one": "%d película nueva",
+            "many": "%d de películas nuevas",
+            "other": "%d películas nuevas"
+        }
     }
 }

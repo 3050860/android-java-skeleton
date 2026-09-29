@@ -20,6 +20,15 @@ import dev.b3nedikt.restring.Restring;
 public class MainActivity extends AppCompatActivity {
 
 	private static final String TAG = "LANGLOOP";
+
+	/**
+	 * Числа для демо plurals. Вместе они дают все формы для целых чисел:
+	 * ru — one (1, 21, 101), few (2, 22), many (5, 11, 25, 1000000);
+	 * en — one/other; es и fr — ещё и many для миллиона (на новых версиях ICU).
+	 * 0 выводится отдельной строкой, см. newMoviesText().
+	 */
+	private static final int[] PLURALS_DEMO_NUMBERS = {0, 1, 2, 5, 11, 21, 22, 25, 101, 1000000};
+
 	private static int sInstance = 0;
 	private final int instanceId = ++sInstance;
 
@@ -75,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
 		btnShowDialog.setOnClickListener(v -> showActionsDialog());
 
 		showArraysDemo();
+		showPluralsDemo();
 
 		Log.d(TAG, "<<< [#" + instanceId + "] onCreate lang=" + MyApplication.getLanguage()
 				+ " nativeMode=" + isNativeMode()
@@ -101,6 +111,28 @@ public class MainActivity extends AppCompatActivity {
 		String[] categories = getResources().getStringArray(R.array.tv_categories);
 		TextView demoArrays = findViewById(R.id.demoArrays);
 		demoArrays.setText(String.join("\n", categories));
+	}
+
+	/** Демо множественного числа: фраза для каждого числа из PLURALS_DEMO_NUMBERS, по одной на строку. */
+	private void showPluralsDemo() {
+		String[] lines = new String[PLURALS_DEMO_NUMBERS.length];
+		for (int i = 0; i < PLURALS_DEMO_NUMBERS.length; i++) {
+			lines[i] = newMoviesText(PLURALS_DEMO_NUMBERS[i]);
+		}
+		TextView demoPlurals = findViewById(R.id.demoPlurals);
+		demoPlurals.setText(String.join("\n", lines));
+	}
+
+	/**
+	 * «N новых фильмов» в нужной форме. Для 0 — отдельная строка: в en и es число 0
+	 * попадает в форму other («0 new movies»), а не в zero, поэтому «нет фильмов» так не написать.
+	 * Число передаётся дважды: первый раз — чтобы выбрать форму, второй — чтобы подставить в %d.
+	 */
+	private String newMoviesText(int count) {
+		if (count == 0) {
+			return getString(R.string.no_new_movies);
+		}
+		return getResources().getQuantityString(R.plurals.new_movies, count, count);
 	}
 
 	private void showActionsDialog() {

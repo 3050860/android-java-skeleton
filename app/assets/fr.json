@@ -11,9 +11,18 @@
         "lang_es": "Espagnol",
         "lang_fr": "Français",
         "cancel": "Annuler",
-        "demo_arrays_title": "Tableaux de chaînes"
+        "demo_arrays_title": "Tableaux de chaînes",
+        "demo_plurals_title": "Pluriels",
+        "no_new_movies": "Aucun nouveau film"
     },
     "arrays": {
         "tv_categories": ["Films", "Séries", "Sport", "Enfants", "Musique"]
+    },
+    "plurals": {
+        "new_movies": {
+            "one": "%d nouveau film",
+            "many": "%d de nouveaux films",
+            "other": "%d nouveaux films"
+        }
     }
 }

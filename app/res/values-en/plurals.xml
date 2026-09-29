@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<plurals name="new_movies">
+		<item quantity="one">%d new movie</item>
+		<item quantity="other">%d new movies</item>
+	</plurals>
+</resources>

@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Android Java Skeleton</string>
-    <string name="string1">строка1</string>
-    <string name="string2">строка2</string>
-    <string name="string3">строка3</string>
-    <string name="string4">строка4</string>
-    <string name="change_language">сменить язык</string>
-    <string name="select_language">Выберите язык</string>
-    <string name="lang_ru">Русский</string>
-    <string name="lang_en">Английский</string>
-    <string name="lang_es">Испанский</string>
-    <string name="lang_fr">Французский</string>
-    <string name="cancel">Отмена</string>
-    <string name="demo_arrays_title">Массивы строк</string>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="ru">
+	<string name="app_name">Android Java Skeleton</string>
+	<string name="string1">строка1</string>
+	<string name="string2">строка2</string>
+	<string name="string3">строка3</string>
+	<string name="string4">строка4</string>
+	<string name="change_language">сменить язык</string>
+	<string name="select_language">Выберите язык</string>
+	<string name="lang_ru">Русский</string>
+	<string name="lang_en">Английский</string>
+	<string name="lang_es">Испанский</string>
+	<string name="lang_fr">Французский</string>
+	<string name="cancel">Отмена</string>
+	<string name="demo_arrays_title">Массивы строк</string>
+	<string name="demo_plurals_title">Множественное число</string>
+	<string name="no_new_movies">Новых фильмов нет</string>
 </resources>
