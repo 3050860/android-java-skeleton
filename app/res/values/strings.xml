@@ -12,4 +12,5 @@
     <string name="lang_es">Испанский</string>
     <string name="lang_fr">Французский</string>
     <string name="cancel">Отмена</string>
+    <string name="demo_arrays_title">Массивы строк</string>
 </resources>

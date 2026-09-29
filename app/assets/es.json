@@ -10,6 +10,10 @@
         "lang_en": "Inglés",
         "lang_es": "Español",
         "lang_fr": "Francés",
-        "cancel": "Cancelar"
+        "cancel": "Cancelar",
+        "demo_arrays_title": "Matrices de cadenas"
+    },
+    "arrays": {
+        "tv_categories": ["Películas", "Series", "Deportes", "Infantil", "Música"]
     }
 }

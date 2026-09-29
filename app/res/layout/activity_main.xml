@@ -1,49 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
-    >
+<!-- Экран с демо длиннее окна: ScrollView прокручивает его пультом (D-pad) -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/text1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/string1"
-        android:textSize="18sp"
-        android:layout_marginBottom="12dp" />
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:padding="16dp">
 
-    <TextView
-        android:id="@+id/text2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/string2"
-        android:textSize="18sp"
-        android:layout_marginBottom="24dp" /> <!-- Увеличили отступ перед следующей группой -->
+		<TextView
+			android:id="@+id/text1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="12dp"
+			android:text="@string/string1"
+			android:textSize="18sp" />
 
-
-    <!-- ВТОРЫЕ ДВЕ СТРОКИ: Будут заданы из Java кода -->
-
-    <TextView
-        android:id="@+id/text3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:layout_marginBottom="12dp" />
-
-    <TextView
-        android:id="@+id/text4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp" />
+		<TextView
+			android:id="@+id/text2"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="24dp"
+			android:text="@string/string2"
+			android:textSize="18sp" /> <!-- Увеличили отступ перед следующей группой -->
 
 
-    <Button
-        android:id="@+id/btnShowDialog"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/change_language" />
+		<!-- ВТОРЫЕ ДВЕ СТРОКИ: Будут заданы из Java кода -->
 
-</LinearLayout>
+		<TextView
+			android:id="@+id/text3"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="12dp"
+			android:textSize="18sp" />
+
+		<TextView
+			android:id="@+id/text4"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="18sp" />
+
+
+		<Button
+			android:id="@+id/btnShowDialog"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			android:text="@string/change_language" />
+
+		<!-- Демо: массив строк. Элементы задаются из кода, см. MainActivity.showArraysDemo() -->
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="24dp"
+			android:layout_marginBottom="8dp"
+			android:text="@string/demo_arrays_title"
+			android:textSize="20sp"
+			android:textStyle="bold" />
+
+		<TextView
+			android:id="@+id/demoArrays"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="18sp" />
+
+	</LinearLayout>
+</ScrollView>

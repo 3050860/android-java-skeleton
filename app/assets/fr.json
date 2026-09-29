@@ -10,6 +10,10 @@
         "lang_en": "Anglais",
         "lang_es": "Espagnol",
         "lang_fr": "Français",
-        "cancel": "Annuler"
+        "cancel": "Annuler",
+        "demo_arrays_title": "Tableaux de chaînes"
+    },
+    "arrays": {
+        "tv_categories": ["Films", "Séries", "Sport", "Enfants", "Musique"]
     }
 }

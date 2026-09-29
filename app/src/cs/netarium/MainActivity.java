@@ -74,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
 		Button btnShowDialog = findViewById(R.id.btnShowDialog);
 		btnShowDialog.setOnClickListener(v -> showActionsDialog());
 
+		showArraysDemo();
+
 		Log.d(TAG, "<<< [#" + instanceId + "] onCreate lang=" + MyApplication.getLanguage()
 				+ " nativeMode=" + isNativeMode()
 				+ " delegate=" + getDelegate().getClass().getSimpleName()
@@ -90,6 +92,15 @@ public class MainActivity extends AppCompatActivity {
 	protected void onDestroy() {
 		Log.d(TAG, "xxx [#" + instanceId + "] onDestroy nativeMode=" + isNativeMode());
 		super.onDestroy();
+	}
+
+	/** Демо массива строк: категории из R.array.tv_categories, по одной на строку. */
+	private void showArraysDemo() {
+		// Массив берём из кода, а не через android:entries в разметке:
+		// Reword переводит атрибуты вроде text и hint, но не entries
+		String[] categories = getResources().getStringArray(R.array.tv_categories);
+		TextView demoArrays = findViewById(R.id.demoArrays);
+		demoArrays.setText(String.join("\n", categories));
 	}
 
 	private void showActionsDialog() {

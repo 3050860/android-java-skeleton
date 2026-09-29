@@ -12,4 +12,5 @@
     <string name="lang_es">Spanish</string>
     <string name="lang_fr">French</string>
     <string name="cancel">Cancel</string>
+    <string name="demo_arrays_title">String arrays</string>
 </resources>

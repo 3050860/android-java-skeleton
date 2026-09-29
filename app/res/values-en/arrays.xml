@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tv_categories">
+        <item>Movies</item>
+        <item>Series</item>
+        <item>Sports</item>
+        <item>Kids</item>
+        <item>Music</item>
+    </string-array>
+</resources>
