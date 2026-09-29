@@ -15,4 +15,10 @@
 	<string name="demo_arrays_title">Массивы строк</string>
 	<string name="demo_plurals_title">Множественное число</string>
 	<string name="no_new_movies">Новых фильмов нет</string>
+	<string name="demo_word_order_title">Порядок слов</string>
+	<!-- Демо порядка слов: %1$s — имя пользователя. В ru после двоеточия, чтобы имя не склонять. -->
+	<string name="playlist_of">Плейлист: %1$s</string>
+	<!-- Демо-данные для строк с параметрами -->
+	<string name="demo_movie_title">Ночной экспресс</string>
+	<string name="demo_user_name">Анна</string>
 </resources>

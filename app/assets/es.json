@@ -13,7 +13,11 @@
         "cancel": "Cancelar",
         "demo_arrays_title": "Matrices de cadenas",
         "demo_plurals_title": "Plurales",
-        "no_new_movies": "No hay películas nuevas"
+        "no_new_movies": "No hay películas nuevas",
+        "demo_word_order_title": "Orden de las palabras",
+        "playlist_of": "Lista de %1$s",
+        "demo_movie_title": "Expreso nocturno",
+        "demo_user_name": "Ana"
     },
     "arrays": {
         "tv_categories": ["Películas", "Series", "Deportes", "Infantil", "Música"]
@@ -23,6 +27,11 @@
             "one": "%d película nueva",
             "many": "%d de películas nuevas",
             "other": "%d películas nuevas"
+        },
+        "time_left": {
+            "one": "Queda %1$d minuto de «%2$s»",
+            "many": "Quedan %1$d de minutos de «%2$s»",
+            "other": "Quedan %1$d minutos de «%2$s»"
         }
     }
 }

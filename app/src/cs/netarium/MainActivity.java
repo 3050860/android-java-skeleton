@@ -29,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
 	 */
 	private static final int[] PLURALS_DEMO_NUMBERS = {0, 1, 2, 5, 11, 21, 22, 25, 101, 1000000};
 
+	/** Минуты для демо порядка слов*/
+	private static final int[] WORD_ORDER_DEMO_MINUTES = {1, 2, 5};
+
 	private static int sInstance = 0;
 	private final int instanceId = ++sInstance;
 
@@ -85,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
 		showArraysDemo();
 		showPluralsDemo();
+		showWordOrderDemo();
 
 		Log.d(TAG, "<<< [#" + instanceId + "] onCreate lang=" + MyApplication.getLanguage()
 				+ " nativeMode=" + isNativeMode()
@@ -133,6 +137,29 @@ public class MainActivity extends AppCompatActivity {
 			return getString(R.string.no_new_movies);
 		}
 		return getResources().getQuantityString(R.plurals.new_movies, count, count);
+	}
+
+	/**
+	 * Демо порядка слов: код всегда передаёт аргументы в одном порядке,
+	 * а перевод ставит их туда, где нужно по грамматике (%1$d, %2$s).
+	 */
+	private void showWordOrderDemo() {
+		String title = getString(R.string.demo_movie_title);
+		String[] lines = new String[WORD_ORDER_DEMO_MINUTES.length + 1];
+		for (int i = 0; i < WORD_ORDER_DEMO_MINUTES.length; i++) {
+			lines[i] = timeLeftText(WORD_ORDER_DEMO_MINUTES[i], title);
+		}
+		lines[lines.length - 1] = getString(R.string.playlist_of, getString(R.string.demo_user_name));
+		TextView demoWordOrder = findViewById(R.id.demoWordOrder);
+		demoWordOrder.setText(String.join("\n", lines));
+	}
+
+	/**
+	 * «До конца «title» осталось N минут»: минуты — %1$d, название — %2$s.
+	 * Минуты передаются дважды: первый раз — чтобы выбрать форму, второй — как %1$d.
+	 */
+	private String timeLeftText(int minutes, String title) {
+		return getResources().getQuantityString(R.plurals.time_left, minutes, minutes, title);
 	}
 
 	private void showActionsDialog() {

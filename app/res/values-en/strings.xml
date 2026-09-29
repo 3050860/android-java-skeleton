@@ -15,4 +15,8 @@
 	<string name="demo_arrays_title">String arrays</string>
 	<string name="demo_plurals_title">Plurals</string>
 	<string name="no_new_movies">No new movies</string>
+	<string name="demo_word_order_title">Word order</string>
+	<string name="playlist_of">%1$s\'s playlist</string>
+	<string name="demo_movie_title">Night Express</string>
+	<string name="demo_user_name">Anna</string>
 </resources>

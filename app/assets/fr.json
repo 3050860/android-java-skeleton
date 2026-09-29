@@ -13,7 +13,11 @@
         "cancel": "Annuler",
         "demo_arrays_title": "Tableaux de chaînes",
         "demo_plurals_title": "Pluriels",
-        "no_new_movies": "Aucun nouveau film"
+        "no_new_movies": "Aucun nouveau film",
+        "demo_word_order_title": "Ordre des mots",
+        "playlist_of": "Playlist de %1$s",
+        "demo_movie_title": "Express de nuit",
+        "demo_user_name": "Anne"
     },
     "arrays": {
         "tv_categories": ["Films", "Séries", "Sport", "Enfants", "Musique"]
@@ -23,6 +27,11 @@
             "one": "%d nouveau film",
             "many": "%d de nouveaux films",
             "other": "%d nouveaux films"
+        },
+        "time_left": {
+            "one": "Il reste %1$d minute de « %2$s »",
+            "many": "Il reste %1$d de minutes de « %2$s »",
+            "other": "Il reste %1$d minutes de « %2$s »"
         }
     }
 }

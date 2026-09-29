@@ -4,4 +4,9 @@
 		<item quantity="one">%d new movie</item>
 		<item quantity="other">%d new movies</item>
 	</plurals>
+
+	<plurals name="time_left">
+		<item quantity="one">%1$d minute left in “%2$s”</item>
+		<item quantity="other">%1$d minutes left in “%2$s”</item>
+	</plurals>
 </resources>
