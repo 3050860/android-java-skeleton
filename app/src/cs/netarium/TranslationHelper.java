@@ -39,14 +39,19 @@ public class TranslationHelper {
 			return;
 		}
 
-		TranslationParser.Translations translations;
+		Translations translations;
 		try {
-			translations = TranslationParser.parse(fileName, json);
+			translations = new TranslationParser(fileName).parse(json);
 		} catch (JSONException e) {
 			// Файл не разбирается как JSON: язык не загружаем, показываются строки из ресурсов APK
 			Log.e(TAG, "~~~ loadLanguage(" + languageCode + ") FAILED: " + fileName + " is not valid JSON", e);
 			return;
 		}
+
+		// Плохие ключи удаляются: для них останутся строки из ресурсов APK
+		new TranslationValidator(context, fileName).validate(translations);
+		// Недостающие формы plurals заполняются формой other
+		new PluralFormsCompleter(locale, fileName).complete(translations);
 
 		Restring.putStrings(locale, translations.strings);
 		Restring.putStringArrays(locale, translations.arrays);
