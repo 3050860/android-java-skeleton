@@ -1,4 +1,4 @@
-package cs.netarium;
+package cs.netarium.localization;
 
 import android.content.Context;
 import android.util.Log;
@@ -84,7 +84,7 @@ public class TranslationHelper {
 	 * forLanguageTag правильно разбирает письменность (Hans) и регион (419),
 	 * а не считает вторую часть тега страной.
 	 */
-	static Locale createLocale(String languageCode) {
+	public static Locale createLocale(String languageCode) {
 		return Locale.forLanguageTag(languageCode);
 	}
 

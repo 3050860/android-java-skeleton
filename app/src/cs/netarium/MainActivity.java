@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.app.ViewPumpAppCompatDelegate;
 
+import cs.netarium.localization.TranslationHelper;
 import dev.b3nedikt.restring.Restring;
 
 public class MainActivity extends AppCompatActivity {

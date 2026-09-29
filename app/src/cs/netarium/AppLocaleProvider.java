@@ -2,6 +2,7 @@ package cs.netarium;
 
 import java.util.Locale;
 
+import cs.netarium.localization.TranslationHelper;
 import dev.b3nedikt.restring.LocaleProvider;
 
 /**

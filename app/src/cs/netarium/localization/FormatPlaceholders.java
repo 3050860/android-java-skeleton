@@ -1,4 +1,4 @@
-package cs.netarium;
+package cs.netarium.localization;
 
 import java.util.HashSet;
 import java.util.List;

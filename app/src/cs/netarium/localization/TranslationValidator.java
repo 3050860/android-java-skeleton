@@ -1,4 +1,4 @@
-package cs.netarium;
+package cs.netarium.localization;
 
 import android.content.Context;
 import android.content.res.Resources;
