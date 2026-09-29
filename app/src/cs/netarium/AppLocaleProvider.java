@@ -14,18 +14,18 @@ import dev.b3nedikt.restring.LocaleProvider;
  */
 final class AppLocaleProvider implements LocaleProvider {
 
-    @Override
-    public boolean isInitial() {
-        return true;
-    }
+	@Override
+	public boolean isInitial() {
+		return true;
+	}
 
-    @Override
-    public Locale getCurrentLocale() {
-        return TranslationHelper.createLocale(MyApplication.getLanguage());
-    }
+	@Override
+	public Locale getCurrentLocale() {
+		return TranslationHelper.createLocale(MyApplication.getLanguage());
+	}
 
-    @Override
-    public void setCurrentLocale(Locale locale) {
-        // Не используется: источник истины - язык в MyApplication (SharedPreferences).
-    }
+	@Override
+	public void setCurrentLocale(Locale locale) {
+		// Не используется: источник истины - язык в MyApplication (SharedPreferences).
+	}
 }
