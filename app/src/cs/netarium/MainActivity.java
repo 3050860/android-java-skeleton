@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public Resources getResources() {
-        android.util.Log.d("LANGLOOP", "getResources isNative=" + MyApplication.isNativeLocale());
+//        android.util.Log.d("LANGLOOP", "getResources isNative=" + MyApplication.isNativeLocale());
         if (MyApplication.isNativeLocale()) {
             return super.getResources();  // ru/en -> штатный AppCompat, без Restring
         }
