@@ -1,8 +1,6 @@
 package cs.netarium;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import org.json.JSONObject;
@@ -17,12 +15,11 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 
-import dev.b3nedikt.restring.MutableStringRepository;
 import dev.b3nedikt.restring.Restring;
-import dev.b3nedikt.restring.StringRepository;
-import dev.b3nedikt.restring.repository.CachedStringRepository;
 
 public class TranslationHelper {
+
+    private static final String TAG = "LANGLOOP";
 
     public static void loadLanguage(Context context, String languageCode) {
 
@@ -30,12 +27,15 @@ public class TranslationHelper {
         // (JSON из assets + Restring): для этих языков применяются штатные
         // строковые ресурсы Android (res/values, res/values-en).
         if (isNativeLanguage(languageCode)) {
-//            Restring.setLocale(createLocale(languageCode));
+            Log.d(TAG, "~~~ loadLanguage(" + languageCode + ") NATIVE -> skip restring"
+                    + " restringLocale=" + Restring.getLocale()
+                    + " providerInitial=" + Restring.getLocaleProvider().isInitial());
             return;
         }
 
         Locale locale = createLocale(languageCode);
         String json;
+        String error = null;
 
         try {
             try {
@@ -43,6 +43,7 @@ public class TranslationHelper {
             } catch (IOException e) {
                 e.printStackTrace();
                 json = "{}";
+                error = "assets/" + languageCode + ".json not found: " + e;
             }
             JSONObject translations = new JSONObject(json);
 
@@ -53,9 +54,17 @@ public class TranslationHelper {
                 stringMap.put(key, translations.getString(key));
             }
 
-//            Restring.setLocale(locale);
             Restring.putStrings(locale, stringMap);
+
+            Log.d(TAG, "~~~ loadLanguage(" + languageCode + ") RESTRING putStrings locale=" + locale
+                    + " count=" + stringMap.size() + " keys=" + stringMap.keySet()
+                    + " err=" + error
+                    + " restringLocale=" + Restring.getLocale()
+                    + " providerInitial=" + Restring.getLocaleProvider().isInitial()
+                    + " supportedLocales=" + Restring.getStringRepository().getSupportedLocales()
+                    + " storedFor=" + Restring.getStringRepository().getStrings().keySet());
         } catch (Exception e) {
+            Log.e(TAG, "~~~ loadLanguage(" + languageCode + ") FAILED", e);
             e.printStackTrace();
         }
     }
