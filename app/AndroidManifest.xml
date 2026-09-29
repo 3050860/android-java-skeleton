@@ -28,9 +28,6 @@
         android:requestRawExternalStorageAccess="true"
         android:theme="@style/Theme.Application"
         android:usesCleartextTraffic="true" >
-        <meta-data
-            android:name="languages"
-            android:value="ru Русский;en English" />
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"

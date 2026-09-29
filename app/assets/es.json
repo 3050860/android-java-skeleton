@@ -2,5 +2,8 @@
     "string1": "Línea 1 del diseño",
     "string2": "Línea 2 del diseño",
     "string3": "Línea 3 desde el código",
-    "string4": "Línea 4 desde el código"
+    "string4": "Línea 4 desde el código",
+    "change_language": "Cambiar idioma",
+    "language_dialog_title": "Selecciona un idioma",
+    "cancel": "Cancelar"
 }

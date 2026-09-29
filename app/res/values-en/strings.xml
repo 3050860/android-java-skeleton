@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Android Java Skeleton</string>
     <string name="string1">string1</string>
     <string name="string2">string2</string>
     <string name="string3">string3</string>
     <string name="string4">string4</string>
-    <string name="change_language">change lang</string>
+    <string name="change_language">Change language</string>
+    <string name="language_dialog_title">Select language</string>
+    <string name="cancel">Cancel</string>
 </resources>
