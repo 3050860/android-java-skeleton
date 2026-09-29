@@ -1,13 +1,15 @@
 {
-    "string1": "Ligne 1 de la mise en page",
-    "string2": "Ligne 2 de la mise en page",
-    "string3": "Ligne 3 depuis le code",
-    "string4": "Ligne 4 depuis le code",
-    "change_language": "changer de langue",
-    "select_language": "Choisissez la langue",
-    "lang_ru": "Russe",
-    "lang_en": "Anglais",
-    "lang_es": "Espagnol",
-    "lang_fr": "Français",
-    "cancel": "Annuler"
+    "strings": {
+        "string1": "Ligne 1 de la mise en page",
+        "string2": "Ligne 2 de la mise en page",
+        "string3": "Ligne 3 depuis le code",
+        "string4": "Ligne 4 depuis le code",
+        "change_language": "changer de langue",
+        "select_language": "Choisissez la langue",
+        "lang_ru": "Russe",
+        "lang_en": "Anglais",
+        "lang_es": "Espagnol",
+        "lang_fr": "Français",
+        "cancel": "Annuler"
+    }
 }
