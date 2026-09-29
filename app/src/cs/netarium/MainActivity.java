@@ -3,7 +3,6 @@ package cs.netarium;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -14,7 +13,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.app.ViewPumpAppCompatDelegate;
-import androidx.core.os.LocaleListCompat;
 
 import dev.b3nedikt.restring.Restring;
 
@@ -22,73 +20,44 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "LANGLOOP";
     private static int sInstance = 0;
-
     private final int instanceId = ++sInstance;
-    private AppCompatDelegate appCompatDelegate;
 
-    private String configInfo() {
-        Configuration conf = super.getResources().getConfiguration();
-        return "config=" + conf
-                + " configLocales=" + conf.getLocales()
-                + " configLocale=" + conf.getLocales().get(0);
-    }
+    /**
+     * Режим фиксируется один раз на экземпляр активити (при первом обращении,
+     * т.е. в attachBaseContext). Смена языка всегда идёт через recreate(),
+     * поэтому новый режим применяется только к новому экземпляру, и делегат/ресурсы
+     * не меняются посреди жизненного цикла.
+     */
+    private Boolean nativeMode;
 
-    private String delegateInfo() {
-        AppCompatDelegate delegate = getDelegate();
-        return "delegate=" + delegate.getClass().getName()
-                + "@" + Integer.toHexString(System.identityHashCode(delegate));
-    }
+    private AppCompatDelegate viewPumpDelegate;
+    private Resources restringResources;
+    private Resources restringBaseResources;
 
-    private String appLocaleInfo() {
-        return "appLocales=" + AppCompatDelegate.getApplicationLocales()
-                + " restringLocale=" + Restring.getLocale()
-                + " providerInitial=" + Restring.getLocaleProvider().isInitial();
-    }
-
-    private AppCompatDelegate getAppCompatDelegate() {
-        if (appCompatDelegate == null) {
-            appCompatDelegate = new ViewPumpAppCompatDelegate(
-                    super.getDelegate(),
-                    this,
-                    Restring::wrapContext
-            );
+    private boolean isNativeMode() {
+        if (nativeMode == null) {
+            nativeMode = MyApplication.isNativeLocale();
         }
-        return appCompatDelegate;
+        return nativeMode;
     }
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(newBase);
-        Log.d(TAG, ">>> [#" + instanceId + "] attachBaseContext sdk=" + Build.VERSION.SDK_INT
-                + " targetSdk=" + getApplicationInfo().targetSdkVersion
-                + " base=" + newBase
-                + " activityResources=" + getResources().getClass().getSimpleName());
-    }
+        // Локаль приложения не зависит от локали устройства: подменяем её в конфигурации
+        // базового контекста. Для ru/en это выбирает values/values-en, для es/fr задаёт
+        // корректные форматы, а строки подставит Restring.
+        Configuration config = new Configuration(newBase.getResources().getConfiguration());
+        config.setLocale(TranslationHelper.createLocale(MyApplication.getLanguage()));
+        super.attachBaseContext(newBase.createConfigurationContext(config));
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        Log.d(TAG, ">>> [#" + instanceId + "] onConfigurationChanged new=" + newConfig
-                + " newLocales=" + newConfig.getLocales());
+        Log.d(TAG, ">>> [#" + instanceId + "] attachBaseContext lang=" + MyApplication.getLanguage()
+                + " nativeMode=" + isNativeMode()
+                + " configLocales=" + super.getResources().getConfiguration().getLocales());
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "<<< [#" + instanceId + "] onCreate ENTER appLang=" + MyApplication.getLanguage()
-                + " isNativeLocale=" + MyApplication.isNativeLocale()
-                + " " + appLocaleInfo()
-                + " " + configInfo()
-                + " savedState=" + (savedInstanceState != null));
-
-        String language = ((MyApplication)getApplication()).getLanguage();
-        setLanguage(language);
-
         super.onCreate(savedInstanceState);
-
-        Log.d(TAG, "<<< [#" + instanceId + "] onCreate AFTER super lang=" + MyApplication.getLanguage()
-                + " " + appLocaleInfo()
-                + " " + delegateInfo()
-                + " " + configInfo());
 
         // Подключаем нашу разметку
         setContentView(R.layout.activity_main);
@@ -104,132 +73,96 @@ public class MainActivity extends AppCompatActivity {
         Button btnShowDialog = findViewById(R.id.btnShowDialog);
         btnShowDialog.setOnClickListener(v -> showActionsDialog());
 
-        Log.d(TAG, "<<< [#" + instanceId + "] onCreate EXIT"
-                + " text1=" + ((TextView) findViewById(R.id.text1)).getText()
-                + " text2=" + ((TextView) findViewById(R.id.text2)).getText()
+        Log.d(TAG, "<<< [#" + instanceId + "] onCreate lang=" + MyApplication.getLanguage()
+                + " nativeMode=" + isNativeMode()
+                + " delegate=" + getDelegate().getClass().getSimpleName()
+                + " resources=" + getResources().getClass().getSimpleName()
+                + " restringLocale=" + Restring.getLocale()
+                + " configLocales=" + getResources().getConfiguration().getLocales()
+                + " savedState=" + (savedInstanceState != null)
+                + " | text1=" + ((TextView) findViewById(R.id.text1)).getText()
                 + " text3=" + text3.getText()
-                + " text4=" + text4.getText()
-                + " button=" + btnShowDialog.getText()
-                + " resourcesClass=" + getResources().getClass().getSimpleName());
+                + " button=" + btnShowDialog.getText());
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "=== [#" + instanceId + "] onResume " + appLocaleInfo() + " " + configInfo());
+    protected void onDestroy() {
+        Log.d(TAG, "xxx [#" + instanceId + "] onDestroy nativeMode=" + isNativeMode());
+        super.onDestroy();
     }
 
     private void showActionsDialog() {
-        // Массив строк для пунктов меню
+        // Пункты меню берём из ресурсов по одному через getString():
+        // для ru/en это штатные R.string, для es/fr строки подставляет Restring.
         String[] actions = {
-                "Русский",
-                "Английский",
-                "Испанский",
-                "Французский"
+                getString(R.string.lang_ru),
+                getString(R.string.lang_en),
+                getString(R.string.lang_es),
+                getString(R.string.lang_fr)
         };
 
         // Создаем AlertDialog
         new AlertDialog.Builder(this)
-                .setTitle("Выберите язык")
+                .setTitle(getString(R.string.select_language))
                 .setItems(actions, (dialog, which) -> {
                     // which - это индекс выбранного пункта (0, 1, 2 или 3)
                     handleAction(which);
                 })
-                .setNegativeButton("Отмена", (dialog, which) -> dialog.dismiss())
+                .setNegativeButton(getString(R.string.cancel), (dialog, which) -> dialog.dismiss())
                 .show();
     }
+
     private void handleAction(int actionIndex) {
         String[] l_codes = {
                 "ru", "en", "es", "fr"
         };
-        String message;
-        switch (actionIndex) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-                changeLanguage(l_codes[actionIndex]);
-                break;
-            default:
-                message = "Неизвестное действие";
-                break;
+        if (actionIndex >= 0 && actionIndex < l_codes.length) {
+            changeLanguage(l_codes[actionIndex]);
         }
     }
 
     public String getLanguage() {
-        return ((MyApplication)getApplication()).getLanguage();
+        return MyApplication.getLanguage();
     }
 
     public void changeLanguage(String language) {
-        Log.d(TAG, "!!! [#" + instanceId + "] changeLanguage REQUEST lang=" + language
-                + " [before] " + appLocaleInfo() + " " + configInfo() + " " + delegateInfo());
-
-        ((MyApplication)getApplication()).setLanguage(language);
-
-        setLanguage(language);
-
-        Log.d(TAG, "!!! [#" + instanceId + "] changeLanguage DONE lang=" + language
-                + " [after] " + appLocaleInfo() + " " + configInfo());
-
-        Log.d(TAG, "!!! [#" + instanceId + "] changeLanguage recreate()");
+        if (language.equals(MyApplication.getLanguage())) {
+            Log.d(TAG, "!!! [#" + instanceId + "] changeLanguage " + language + " - already active");
+            return;
+        }
+        Log.d(TAG, "!!! [#" + instanceId + "] changeLanguage " + MyApplication.getLanguage()
+                + " -> " + language + ", recreate()");
+        ((MyApplication) getApplication()).setLanguage(language);
         recreate();
     }
 
-//    public void setLanguage(String language) {
-//        TranslationHelper.loadLanguage(this, language);
-//        LocaleListCompat appLocale = LocaleListCompat.forLanguageTags(language);
-//        AppCompatDelegate.setApplicationLocales(appLocale);
-//
-//    }
-    public void setLanguage(String language) {
-        if (TranslationHelper.isNativeLanguage(language)) {
-            // ru/en: штатные ресурсы, локаль через AndroidX
-            TranslationHelper.loadLanguage(this, language);   // сброс Restring.setLocale
-            AppCompatDelegate.setApplicationLocales(
-                    LocaleListCompat.forLanguageTags(language));
-        } else {
-            // es/fr: ресурсы через Restring, локаль через Restring
-            TranslationHelper.loadLanguage(this, language);
-            AppCompatDelegate.setApplicationLocales(
-                    LocaleListCompat.forLanguageTags(language));
-        }
-        Log.d(TAG, "    [#" + instanceId + "] setLanguage(" + language + ") isNative="
-                + TranslationHelper.isNativeLanguage(language)
-                + " [after] " + appLocaleInfo() + " " + configInfo());
-    }
     @NonNull
     @Override
     public AppCompatDelegate getDelegate() {
-        if (MyApplication.isNativeLocale()) {
-            AppCompatDelegate delegate = super.getDelegate();
-            Log.d(TAG, "    [#" + instanceId + "] getDelegate() -> NATIVE "
-                    + delegate.getClass().getSimpleName()
-                    + "@" + Integer.toHexString(System.identityHashCode(delegate)));
-            return delegate;  // ru/en -> штатный AppCompat, без Restring
+        if (isNativeMode()) {
+            return super.getDelegate();  // ru/en -> штатный AppCompat, без Restring
         }
-        AppCompatDelegate delegate = getAppCompatDelegate();
-        AppCompatDelegate baseDelegate = super.getDelegate();
-        Log.d(TAG, "    [#" + instanceId + "] getDelegate() -> VIEWPUMP "
-                + delegate.getClass().getSimpleName()
-                + "@" + Integer.toHexString(System.identityHashCode(delegate))
-                + " base=" + baseDelegate.getClass().getSimpleName()
-                + "@" + Integer.toHexString(System.identityHashCode(baseDelegate)));
-        return delegate;
+        if (viewPumpDelegate == null) {
+            viewPumpDelegate = new ViewPumpAppCompatDelegate(
+                    super.getDelegate(),
+                    this,
+                    Restring::wrapContext
+            );
+        }
+        return viewPumpDelegate;
     }
 
     @Override
     public Resources getResources() {
-        Resources baseResources = super.getResources();
-        boolean isNative = MyApplication.isNativeLocale();
-        Resources result = isNative ? baseResources : Restring.wrapResources(this, baseResources);
-        // Логируем только когда реально создаётся/подменяется обёртка, чтобы не спамить на каждый вызов
-        if (result != baseResources) {
-            Log.d(TAG, "    [#" + instanceId + "] getResources -> WRAPPED "
-                    + baseResources.getClass().getSimpleName()
-                    + "@" + Integer.toHexString(System.identityHashCode(baseResources))
-                    + " -> " + result.getClass().getSimpleName()
-                    + "@" + Integer.toHexString(System.identityHashCode(result)));
+        Resources base = super.getResources();
+        if (isNativeMode()) {
+            return base;  // ru/en -> штатные ресурсы, без Restring
         }
-        return result;
+        // Кешируем обёртку, пересоздаём только если сменились базовые ресурсы.
+        if (restringResources == null || restringBaseResources != base) {
+            restringBaseResources = base;
+            restringResources = Restring.wrapResources(this, base);
+        }
+        return restringResources;
     }
 }

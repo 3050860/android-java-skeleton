@@ -1,10 +1,10 @@
 package cs.netarium;
 
 import android.app.Application;
+import android.app.LocaleManager;
 import android.os.Build;
+import android.os.LocaleList;
 import android.util.Log;
-
-import androidx.appcompat.app.AppCompatDelegate;
 
 import java.util.Locale;
 
@@ -26,24 +26,38 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        Log.d(TAG, "@@@ Application.onCreate sdk=" + Build.VERSION.SDK_INT
-                + " targetSdk=" + getApplicationInfo().targetSdkVersion
-                + " javaDefaultLocale=" + Locale.getDefault());
-
-        Restring.init(this);
-        Restring.stringRepository = new MemoryStringsRepository();
-        ViewPump.init(RewordInterceptor.INSTANCE);
-
         sLanguage = getSharedPreferences(PREFS, MODE_PRIVATE)
                 .getString(KEY_LANGUAGE, DEFAULT_LANGUAGE);
 
-        Log.d(TAG, "@@@ Application.onCreate storedLanguage=" + sLanguage
-                + " isNativeLocale=" + isNativeLocale()
-                + " restringLocale=" + Restring.getLocale()
-                + " providerInitial=" + Restring.getLocaleProvider().isInitial()
-                + " repository=" + Restring.getStringRepository().getClass().getSimpleName()
-                + " supportedLocales=" + Restring.getStringRepository().getSupportedLocales()
-                + " appLocales=" + AppCompatDelegate.getApplicationLocales());
+        Restring.init(this);
+        Restring.stringRepository = new MemoryStringsRepository();
+        Restring.setLocaleProvider(new AppLocaleProvider());
+        ViewPump.init(RewordInterceptor.INSTANCE);
+
+        clearSystemAppLocales();
+
+        // Строки для текущего не-нативного языка грузим один раз при старте процесса.
+        TranslationHelper.loadLanguage(this, sLanguage);
+
+        Log.d(TAG, "@@@ Application.onCreate sdk=" + Build.VERSION.SDK_INT
+                + " deviceLocale=" + Locale.getDefault()
+                + " storedLanguage=" + sLanguage
+                + " isNative=" + isNativeLocale()
+                + " restringLocale=" + Restring.getLocale());
+    }
+
+    /**
+     * На Android 13+ после прежних экспериментов с AppCompatDelegate.setApplicationLocales
+     * в системе мог остаться per-app язык. Он конфликтует с нашим выбором, поэтому сбрасываем.
+     */
+    private void clearSystemAppLocales() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            LocaleManager localeManager = getSystemService(LocaleManager.class);
+            if (localeManager != null && !localeManager.getApplicationLocales().isEmpty()) {
+                Log.d(TAG, "@@@ clearing system app locales: " + localeManager.getApplicationLocales());
+                localeManager.setApplicationLocales(LocaleList.getEmptyLocaleList());
+            }
+        }
     }
 
     public static String getLanguage() {
@@ -51,11 +65,13 @@ public class MyApplication extends Application {
     }
 
     public void setLanguage(String language) {
-        Log.d(TAG, "@@@ MyApplication.setLanguage " + sLanguage + " -> " + language);
+        Log.d(TAG, "@@@ setLanguage " + sLanguage + " -> " + language);
         sLanguage = language;
         getSharedPreferences(PREFS, MODE_PRIVATE)
                 .edit().putString(KEY_LANGUAGE, language).apply();
+        TranslationHelper.loadLanguage(this, language);
     }
+
     public static boolean isNativeLocale() {
         return TranslationHelper.isNativeLanguage(sLanguage);
     }

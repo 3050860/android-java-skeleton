@@ -6,4 +6,10 @@
     <string name="string3">строка3</string>
     <string name="string4">строка4</string>
     <string name="change_language">сменить язык</string>
+    <string name="select_language">Выберите язык</string>
+    <string name="lang_ru">Русский</string>
+    <string name="lang_en">Английский</string>
+    <string name="lang_es">Испанский</string>
+    <string name="lang_fr">Французский</string>
+    <string name="cancel">Отмена</string>
 </resources>

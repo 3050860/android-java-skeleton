@@ -27,9 +27,6 @@ public class TranslationHelper {
         // (JSON из assets + Restring): для этих языков применяются штатные
         // строковые ресурсы Android (res/values, res/values-en).
         if (isNativeLanguage(languageCode)) {
-            Log.d(TAG, "~~~ loadLanguage(" + languageCode + ") NATIVE -> skip restring"
-                    + " restringLocale=" + Restring.getLocale()
-                    + " providerInitial=" + Restring.getLocaleProvider().isInitial());
             return;
         }
 
@@ -56,13 +53,10 @@ public class TranslationHelper {
 
             Restring.putStrings(locale, stringMap);
 
-            Log.d(TAG, "~~~ loadLanguage(" + languageCode + ") RESTRING putStrings locale=" + locale
-                    + " count=" + stringMap.size() + " keys=" + stringMap.keySet()
-                    + " err=" + error
-                    + " restringLocale=" + Restring.getLocale()
-                    + " providerInitial=" + Restring.getLocaleProvider().isInitial()
-                    + " supportedLocales=" + Restring.getStringRepository().getSupportedLocales()
-                    + " storedFor=" + Restring.getStringRepository().getStrings().keySet());
+            Log.d(TAG, "~~~ loadLanguage(" + languageCode + ") locale=" + locale
+                    + " count=" + stringMap.size()
+                    + (error != null ? " err=" + error : "")
+                    + " supportedLocales=" + Restring.getStringRepository().getSupportedLocales());
         } catch (Exception e) {
             Log.e(TAG, "~~~ loadLanguage(" + languageCode + ") FAILED", e);
             e.printStackTrace();
