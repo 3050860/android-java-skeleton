@@ -1,0 +1,46 @@
+{
+    "strings": {
+        "string1": "Řádek 1 z rozvržení",
+        "string2": "Řádek 2 z rozvržení",
+        "string3": "Řádek 3 z kódu",
+        "string4": "Řádek 4 z kódu",
+        "change_language": "změnit jazyk",
+        "select_language": "Vyberte jazyk",
+        "cancel": "Zrušit",
+        "demo_arrays_title": "Pole řetězců",
+        "demo_plurals_title": "Množné číslo",
+        "no_new_movies": "Žádné nové filmy",
+        "demo_word_order_title": "Slovosled",
+        "playlist_of": "Playlist: %1$s",
+        "demo_movie_title": "Noční expres",
+        "demo_user_name": "Anna",
+        "demo_dates_title": "Datum a čas",
+        "demo_date_day_month": "Den a měsíc: %1$s",
+        "demo_date_full": "Celé datum: %1$s",
+        "demo_date_time": "Čas: %1$s",
+        "demo_date_month": "Samotný měsíc: %1$s",
+        "demo_date_relative": "Relativně: %1$s · %2$s",
+        "demo_numbers_title": "Čísla",
+        "demo_number_plain": "Číslo: %1$s",
+        "demo_number_compact": "Zkráceně: %1$s",
+        "demo_number_percent": "Procenta: %1$s",
+        "demo_number_duration": "Délka: %1$s"
+    },
+    "arrays": {
+        "tv_categories": ["Filmy", "Seriály", "Sport", "Pro děti", "Hudba"]
+    },
+    "plurals": {
+        "new_movies": {
+            "one": "%1$s nový film",
+            "few": "%1$s nové filmy",
+            "many": "%1$s nového filmu",
+            "other": "%1$s nových filmů"
+        },
+        "time_left": {
+            "one": "Do konce „%2$s“ zbývá %1$s minuta",
+            "few": "Do konce „%2$s“ zbývají %1$s minuty",
+            "many": "Do konce „%2$s“ zbývá %1$s minuty",
+            "other": "Do konce „%2$s“ zbývá %1$s minut"
+        }
+    }
+}

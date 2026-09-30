@@ -2,7 +2,7 @@ package cs.netarium;
 
 import java.util.Locale;
 
-import cs.netarium.localization.TranslationHelper;
+import cs.netarium.localization.Language;
 import dev.b3nedikt.restring.LocaleProvider;
 
 /**
@@ -22,7 +22,7 @@ final class AppLocaleProvider implements LocaleProvider {
 
 	@Override
 	public Locale getCurrentLocale() {
-		return TranslationHelper.createLocale(MyApplication.getLanguage());
+		return Language.toLocale(MyApplication.getLanguage());
 	}
 
 	@Override

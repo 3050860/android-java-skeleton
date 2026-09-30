@@ -15,10 +15,12 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.app.ViewPumpAppCompatDelegate;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
+import cs.netarium.localization.Language;
+import cs.netarium.localization.LanguageCatalog;
 import cs.netarium.localization.LocaleFormats;
-import cs.netarium.localization.TranslationHelper;
 import dev.b3nedikt.restring.Restring;
 
 public class MainActivity extends AppCompatActivity {
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 		// базового контекста. Для ru/en это выбирает values/values-en, для es/fr задаёт
 		// корректные форматы, а строки подставит Restring.
 		Configuration config = new Configuration(newBase.getResources().getConfiguration());
-		config.setLocale(TranslationHelper.createLocale(MyApplication.getLanguage()));
+		config.setLocale(Language.toLocale(MyApplication.getLanguage()));
 		super.attachBaseContext(newBase.createConfigurationContext(config));
 
 		Log.d(TAG, ">>> [#" + instanceId + "] attachBaseContext lang=" + MyApplication.getLanguage()
@@ -230,37 +232,27 @@ public class MainActivity extends AppCompatActivity {
 
 	/** Локаль выбранного языка — та же, по которой Restring выбирает строки (AppLocaleProvider). */
 	private Locale selectedLocale() {
-		return TranslationHelper.createLocale(MyApplication.getLanguage());
+		return Language.toLocale(MyApplication.getLanguage());
 	}
 
 	private void showActionsDialog() {
-		// Пункты меню берём из ресурсов по одному через getString():
-		// для ru/en это штатные R.string, для es/fr строки подставляет Restring.
-		String[] actions = {
-				getString(R.string.lang_ru),
-				getString(R.string.lang_en),
-				getString(R.string.lang_es),
-				getString(R.string.lang_fr)
-		};
+		// Языки: встроенные ru/en плюс список с сервера. Каждый назван на самом себе
+		// («Español», «Čeština»), поэтому названия не зависят от языка интерфейса.
+		List<Language> languages = LanguageCatalog.all(this);
+		String[] names = new String[languages.size()];
+		for (int i = 0; i < languages.size(); i++) {
+			names[i] = languages.get(i).getName();
+		}
 
 		// Создаем AlertDialog
 		new AlertDialog.Builder(this)
 				.setTitle(getString(R.string.select_language))
-				.setItems(actions, (dialog, which) -> {
-					// which - это индекс выбранного пункта (0, 1, 2 или 3)
-					handleAction(which);
+				.setItems(names, (dialog, which) -> {
+					// which - это индекс выбранного пункта в languages
+					changeLanguage(languages.get(which).getCode());
 				})
 				.setNegativeButton(getString(R.string.cancel), (dialog, which) -> dialog.dismiss())
 				.show();
-	}
-
-	private void handleAction(int actionIndex) {
-		String[] l_codes = {
-				"ru", "en", "es", "fr"
-		};
-		if (actionIndex >= 0 && actionIndex < l_codes.length) {
-			changeLanguage(l_codes[actionIndex]);
-		}
 	}
 
 	public String getLanguage() {

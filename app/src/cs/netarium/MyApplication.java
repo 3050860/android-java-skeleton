@@ -8,6 +8,7 @@ import android.util.Log;
 
 import java.util.Locale;
 
+import cs.netarium.localization.LanguageCatalog;
 import cs.netarium.localization.TranslationHelper;
 import dev.b3nedikt.restring.Restring;
 import dev.b3nedikt.restring.repository.MemoryStringsRepository;
@@ -74,6 +75,6 @@ public class MyApplication extends Application {
 	}
 
 	public static boolean isNativeLocale() {
-		return TranslationHelper.isNativeLanguage(sLanguage);
+		return LanguageCatalog.isBundled(sLanguage);
 	}
 }

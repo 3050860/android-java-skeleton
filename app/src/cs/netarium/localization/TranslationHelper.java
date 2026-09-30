@@ -5,11 +5,7 @@ import android.util.Log;
 
 import org.json.JSONException;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 import dev.b3nedikt.restring.Restring;
@@ -20,22 +16,21 @@ public class TranslationHelper {
 
 	public static void loadLanguage(Context context, String languageCode) {
 
-		// Для русского и английского не используем динамическую систему переводов
-		// (JSON из assets + Restring): для этих языков применяются штатные
-		// строковые ресурсы Android (res/values, res/values-en).
-		if (isNativeLanguage(languageCode)) {
+		// Встроенные языки (ru, en) берутся из ресурсов APK (res/values, res/values-en),
+		// файлов переводов для них нет, в Restring ничего не загружаем.
+		if (LanguageCatalog.isBundled(languageCode)) {
 			return;
 		}
 
-		Locale locale = createLocale(languageCode);
-		String fileName = languageCode + ".json";
+		Locale locale = Language.toLocale(languageCode);
+		String fileName = TranslationSource.translationsFile(languageCode);
 
 		String json;
 		try {
-			json = loadJsonFromAssets(context, fileName);
+			json = new TranslationSource(context).translations(languageCode);
 		} catch (IOException e) {
 			// Файла нет: язык не загружаем, показываются строки из ресурсов APK
-			Log.w(TAG, "~~~ loadLanguage(" + languageCode + ") assets/" + fileName + " not found", e);
+			Log.w(TAG, "~~~ loadLanguage(" + languageCode + ") " + fileName + " not found", e);
 			return;
 		}
 
@@ -62,43 +57,5 @@ public class TranslationHelper {
 				+ " arrays=" + translations.arrays.size()
 				+ " plurals=" + translations.plurals.size()
 				+ " supportedLocales=" + Restring.getStringRepository().getSupportedLocales());
-	}
-
-	/**
-	 * Возвращает true, если для языка не нужна динамическая система переводов,
-	 * т.е. язык русский или английский. Для таких языков используются штатные
-	 * ресурсы приложения, а система Restring не инициализируется и не оборачивает
-	 * ресурсы/контекст вообще.
-	 */
-	public static boolean isNativeLanguage(String languageCode) {
-		if (languageCode == null || languageCode.isEmpty()) {
-			return false;
-		}
-		// Берём только код языка (без региона), приводим к нижнему регистру
-		String lang = languageCode.split("[-_]")[0].toLowerCase(Locale.ROOT);
-		return "ru".equals(lang) || "en".equals(lang);
-	}
-
-	/**
-	 * Код языка -> Locale. Код — тег BCP 47 через дефис: "es", "zh-Hans", "es-419".
-	 * forLanguageTag правильно разбирает письменность (Hans) и регион (419),
-	 * а не считает вторую часть тега страной.
-	 */
-	public static Locale createLocale(String languageCode) {
-		return Locale.forLanguageTag(languageCode);
-	}
-
-	private static String loadJsonFromAssets(Context context, String fileName) throws IOException {
-		// Использование try-with-resources автоматически закроет потоки при ошибке или завершении
-		try (InputStream is = context.getAssets().open(fileName);
-		     BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
-
-			StringBuilder sb = new StringBuilder();
-			String line;
-			while ((line = reader.readLine()) != null) {
-				sb.append(line);
-			}
-			return sb.toString();
-		}
 	}
 }
