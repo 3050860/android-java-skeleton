@@ -19,10 +19,7 @@ public final class LanguageCatalog {
 
 	private static final String TAG = "LanguageCatalog";
 
-	/**
-	 * Коды встроенных языков. Хранятся в коде, а не в ресурсах: isBundled() вызывается
-	 * и из MainActivity.attachBaseContext(), когда у активити ещё нет доступа к ресурсам.
-	 */
+	/** Коды встроенных языков. */
 	private static final List<String> BUNDLED_CODES = Collections.unmodifiableList(Arrays.asList("ru", "en"));
 
 	private LanguageCatalog() {

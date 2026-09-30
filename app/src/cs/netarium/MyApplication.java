@@ -8,7 +8,6 @@ import android.util.Log;
 
 import java.util.Locale;
 
-import cs.netarium.localization.LanguageCatalog;
 import cs.netarium.localization.TranslationHelper;
 import dev.b3nedikt.restring.Restring;
 import dev.b3nedikt.restring.repository.MemoryStringsRepository;
@@ -38,13 +37,12 @@ public class MyApplication extends Application {
 
 		clearSystemAppLocales();
 
-		// Строки для текущего не-нативного языка грузим один раз при старте процесса.
+		// Строки текущего языка с сервера грузим один раз при старте процесса.
 		TranslationHelper.loadLanguage(this, sLanguage);
 
 		Log.d(TAG, "@@@ Application.onCreate sdk=" + Build.VERSION.SDK_INT
 				+ " deviceLocale=" + Locale.getDefault()
 				+ " storedLanguage=" + sLanguage
-				+ " isNative=" + isNativeLocale()
 				+ " restringLocale=" + Restring.getLocale());
 	}
 
@@ -72,9 +70,5 @@ public class MyApplication extends Application {
 		getSharedPreferences(PREFS, MODE_PRIVATE)
 				.edit().putString(KEY_LANGUAGE, language).apply();
 		TranslationHelper.loadLanguage(this, language);
-	}
-
-	public static boolean isNativeLocale() {
-		return LanguageCatalog.isBundled(sLanguage);
 	}
 }

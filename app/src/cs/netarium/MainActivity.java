@@ -52,27 +52,12 @@ public class MainActivity extends AppCompatActivity {
 	private static int sInstance = 0;
 	private final int instanceId = ++sInstance;
 
-	/**
-	 * Режим фиксируется один раз на экземпляр активити (при первом обращении,
-	 * т.е. в attachBaseContext). Смена языка всегда идёт через recreate(),
-	 * поэтому новый режим применяется только к новому экземпляру, и делегат/ресурсы
-	 * не меняются посреди жизненного цикла.
-	 */
-	private Boolean nativeMode;
-
 	private AppCompatDelegate viewPumpDelegate;
 	private Resources restringResources;
 	private Resources restringBaseResources;
 
 	/** Даты и числа выбранного языка; создаются при первом обращении, см. formats(). */
 	private LocaleFormats localeFormats;
-
-	private boolean isNativeMode() {
-		if (nativeMode == null) {
-			nativeMode = MyApplication.isNativeLocale();
-		}
-		return nativeMode;
-	}
 
 	@Override
 	protected void attachBaseContext(Context newBase) {
@@ -84,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
 		super.attachBaseContext(newBase.createConfigurationContext(config));
 
 		Log.d(TAG, ">>> [#" + instanceId + "] attachBaseContext lang=" + MyApplication.getLanguage()
-				+ " nativeMode=" + isNativeMode()
 				+ " configLocales=" + super.getResources().getConfiguration().getLocales());
 	}
 
@@ -113,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
 		showNumbersDemo();
 
 		Log.d(TAG, "<<< [#" + instanceId + "] onCreate lang=" + MyApplication.getLanguage()
-				+ " nativeMode=" + isNativeMode()
 				+ " delegate=" + getDelegate().getClass().getSimpleName()
 				+ " resources=" + getResources().getClass().getSimpleName()
 				+ " restringLocale=" + Restring.getLocale()
@@ -126,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
 	@Override
 	protected void onDestroy() {
-		Log.d(TAG, "xxx [#" + instanceId + "] onDestroy nativeMode=" + isNativeMode());
+		Log.d(TAG, "xxx [#" + instanceId + "] onDestroy");
 		super.onDestroy();
 	}
 
@@ -270,12 +253,13 @@ public class MainActivity extends AppCompatActivity {
 		recreate();
 	}
 
+	/**
+	 * Restring подключён для всех языков. Для встроенных ru/en в него ничего не загружено,
+	 * и он сам отдаёт строки из ресурсов APK (values/, values-en/).
+	 */
 	@NonNull
 	@Override
 	public AppCompatDelegate getDelegate() {
-		if (isNativeMode()) {
-			return super.getDelegate();  // ru/en -> штатный AppCompat, без Restring
-		}
 		if (viewPumpDelegate == null) {
 			viewPumpDelegate = new ViewPumpAppCompatDelegate(
 					super.getDelegate(),
@@ -289,9 +273,6 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	public Resources getResources() {
 		Resources base = super.getResources();
-		if (isNativeMode()) {
-			return base;  // ru/en -> штатные ресурсы, без Restring
-		}
 		// Кешируем обёртку, пересоздаём только если сменились базовые ресурсы.
 		if (restringResources == null || restringBaseResources != base) {
 			restringBaseResources = base;

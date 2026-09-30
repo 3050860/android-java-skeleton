@@ -16,8 +16,8 @@ public class TranslationHelper {
 
 	public static void loadLanguage(Context context, String languageCode) {
 
-		// Встроенные языки (ru, en) берутся из ресурсов APK (res/values, res/values-en),
-		// файлов переводов для них нет, в Restring ничего не загружаем.
+		// Встроенные языки (ru, en) берутся из ресурсов APK (res/values, res/values-en).
+		// В Restring для них ничего не загружаем: не найдя строк языка, он сам отдаёт строки из ресурсов.
 		if (LanguageCatalog.isBundled(languageCode)) {
 			return;
 		}
