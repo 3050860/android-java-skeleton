@@ -1,0 +1,40 @@
+{
+    "strings": {
+        "string1": "来自布局的第 1 行",
+        "string2": "来自布局的第 2 行",
+        "string3": "来自代码的第 3 行",
+        "string4": "来自代码的第 4 行",
+        "change_language": "更改语言",
+        "select_language": "选择语言",
+        "cancel": "取消",
+        "demo_arrays_title": "字符串数组",
+        "demo_plurals_title": "复数形式",
+        "no_new_movies": "没有新电影",
+        "demo_word_order_title": "语序",
+        "playlist_of": "%1$s的播放列表",
+        "demo_movie_title": "夜间快车",
+        "demo_user_name": "安娜",
+        "demo_dates_title": "日期",
+        "demo_date_day_month": "月和日：%1$s",
+        "demo_date_full": "完整日期：%1$s",
+        "demo_date_time": "时间：%1$s",
+        "demo_date_month": "仅月份：%1$s",
+        "demo_date_relative": "相对日期：%1$s · %2$s",
+        "demo_numbers_title": "数字",
+        "demo_number_plain": "数字：%1$s",
+        "demo_number_compact": "简写：%1$s",
+        "demo_number_percent": "百分比：%1$s",
+        "demo_number_duration": "时长：%1$s"
+    },
+    "arrays": {
+        "tv_categories": ["电影", "电视剧", "体育", "少儿", "音乐"]
+    },
+    "plurals": {
+        "new_movies": {
+            "other": "%1$s 部新电影"
+        },
+        "time_left": {
+            "other": "《%2$s》还剩 %1$s 分钟"
+        }
+    }
+}

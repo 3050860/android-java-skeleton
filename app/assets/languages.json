@@ -2,6 +2,7 @@
     "languages": [
         { "code": "es" },
         { "code": "fr" },
-        { "code": "cs" }
+        { "code": "cs" },
+        { "code": "zh-Hans" }
     ]
 }
