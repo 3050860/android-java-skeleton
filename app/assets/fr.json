@@ -17,7 +17,13 @@
         "demo_word_order_title": "Ordre des mots",
         "playlist_of": "Playlist de %1$s",
         "demo_movie_title": "Express de nuit",
-        "demo_user_name": "Anne"
+        "demo_user_name": "Anne",
+        "demo_dates_title": "Dates",
+        "demo_date_day_month": "Jour et mois : %1$s",
+        "demo_date_full": "Date complète : %1$s",
+        "demo_date_time": "Heure : %1$s",
+        "demo_date_month": "Mois seul : %1$s",
+        "demo_date_relative": "Relatif : %1$s · %2$s"
     },
     "arrays": {
         "tv_categories": ["Films", "Séries", "Sport", "Enfants", "Musique"]

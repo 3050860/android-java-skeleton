@@ -14,6 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.app.ViewPumpAppCompatDelegate;
 
+import java.util.Date;
+import java.util.Locale;
+
+import cs.netarium.localization.LocaleFormats;
 import cs.netarium.localization.TranslationHelper;
 import dev.b3nedikt.restring.Restring;
 
@@ -31,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
 
 	/** Минуты для демо порядка слов*/
 	private static final int[] WORD_ORDER_DEMO_MINUTES = {1, 2, 5};
+
+	/** Дни для демо относительных дат: -1 — «вчера» (отдельное слово), 3 — «через 3 дня» (число). */
+	private static final int RELATIVE_DEMO_PAST_DAYS = -1;
+	private static final int RELATIVE_DEMO_FUTURE_DAYS = 3;
 
 	private static int sInstance = 0;
 	private final int instanceId = ++sInstance;
@@ -89,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
 		showArraysDemo();
 		showPluralsDemo();
 		showWordOrderDemo();
+		showDatesDemo();
 
 		Log.d(TAG, "<<< [#" + instanceId + "] onCreate lang=" + MyApplication.getLanguage()
 				+ " nativeMode=" + isNativeMode()
@@ -160,6 +169,31 @@ public class MainActivity extends AppCompatActivity {
 	 */
 	private String timeLeftText(int minutes, String title) {
 		return getResources().getQuantityString(R.plurals.time_left, minutes, minutes, title);
+	}
+
+	/**
+	 * Демо дат через ICU: текущая дата в форматах выбранного языка.
+	 * Подписи — строки из ресурсов, сами даты строит ICU, в переводы они не попадают.
+	 */
+	private void showDatesDemo() {
+		LocaleFormats formats = new LocaleFormats(selectedLocale());
+		Date now = new Date();
+		String[] lines = {
+				getString(R.string.demo_date_day_month, formats.dayAndMonth(now)),
+				getString(R.string.demo_date_full, formats.fullDate(now)),
+				getString(R.string.demo_date_time, formats.time(now)),
+				getString(R.string.demo_date_month, formats.month(now)),
+				getString(R.string.demo_date_relative,
+						formats.relativeDays(RELATIVE_DEMO_PAST_DAYS),
+						formats.relativeDays(RELATIVE_DEMO_FUTURE_DAYS))
+		};
+		TextView demoDates = findViewById(R.id.demoDates);
+		demoDates.setText(String.join("\n", lines));
+	}
+
+	/** Локаль выбранного языка — та же, по которой Restring выбирает строки (AppLocaleProvider). */
+	private Locale selectedLocale() {
+		return TranslationHelper.createLocale(MyApplication.getLanguage());
 	}
 
 	private void showActionsDialog() {

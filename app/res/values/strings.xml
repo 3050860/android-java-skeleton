@@ -21,4 +21,12 @@
 	<!-- Демо-данные для строк с параметрами -->
 	<string name="demo_movie_title">Ночной экспресс</string>
 	<string name="demo_user_name">Анна</string>
+	<string name="demo_dates_title">Даты</string>
+	<!-- Подписи демо дат: %1$s — дата или время, которые форматирует ICU -->
+	<string name="demo_date_day_month">День и месяц: %1$s</string>
+	<string name="demo_date_full">Полная дата: %1$s</string>
+	<string name="demo_date_time">Время: %1$s</string>
+	<string name="demo_date_month">Месяц отдельно: %1$s</string>
+	<!-- %1$s — «вчера», %2$s — «через 3 дня» -->
+	<string name="demo_date_relative">Относительно: %1$s · %2$s</string>
 </resources>

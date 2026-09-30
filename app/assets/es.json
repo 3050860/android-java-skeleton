@@ -17,7 +17,13 @@
         "demo_word_order_title": "Orden de las palabras",
         "playlist_of": "Lista de %1$s",
         "demo_movie_title": "Expreso nocturno",
-        "demo_user_name": "Ana"
+        "demo_user_name": "Ana",
+        "demo_dates_title": "Fechas",
+        "demo_date_day_month": "Día y mes: %1$s",
+        "demo_date_full": "Fecha completa: %1$s",
+        "demo_date_time": "Hora: %1$s",
+        "demo_date_month": "Mes solo: %1$s",
+        "demo_date_relative": "Relativo: %1$s · %2$s"
     },
     "arrays": {
         "tv_categories": ["Películas", "Series", "Deportes", "Infantil", "Música"]

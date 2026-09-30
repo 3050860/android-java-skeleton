@@ -19,4 +19,10 @@
 	<string name="playlist_of">%1$s\'s playlist</string>
 	<string name="demo_movie_title">Night Express</string>
 	<string name="demo_user_name">Anna</string>
+	<string name="demo_dates_title">Dates</string>
+	<string name="demo_date_day_month">Day and month: %1$s</string>
+	<string name="demo_date_full">Full date: %1$s</string>
+	<string name="demo_date_time">Time: %1$s</string>
+	<string name="demo_date_month">Month alone: %1$s</string>
+	<string name="demo_date_relative">Relative: %1$s · %2$s</string>
 </resources>
