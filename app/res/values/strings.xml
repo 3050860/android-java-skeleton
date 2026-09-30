@@ -29,4 +29,10 @@
 	<string name="demo_date_month">Месяц отдельно: %1$s</string>
 	<!-- %1$s — «вчера», %2$s — «через 3 дня» -->
 	<string name="demo_date_relative">Относительно: %1$s · %2$s</string>
+	<string name="demo_numbers_title">Числа</string>
+	<!-- Подписи демо чисел: %1$s — число, которое форматирует ICU -->
+	<string name="demo_number_plain">Число: %1$s</string>
+	<string name="demo_number_compact">Кратко: %1$s</string>
+	<string name="demo_number_percent">Процент: %1$s</string>
+	<string name="demo_number_duration">Длительность: %1$s</string>
 </resources>

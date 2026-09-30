@@ -113,5 +113,21 @@
 			android:layout_height="wrap_content"
 			android:textSize="18sp" />
 
+		<!-- Демо: числа через ICU. Строки задаются из кода, см. MainActivity.showNumbersDemo() -->
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="24dp"
+			android:layout_marginBottom="8dp"
+			android:text="@string/demo_numbers_title"
+			android:textSize="20sp"
+			android:textStyle="bold" />
+
+		<TextView
+			android:id="@+id/demoNumbers"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="18sp" />
+
 	</LinearLayout>
 </ScrollView>

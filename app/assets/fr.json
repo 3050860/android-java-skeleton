@@ -19,25 +19,30 @@
         "demo_movie_title": "Express de nuit",
         "demo_user_name": "Anne",
         "demo_dates_title": "Dates",
-        "demo_date_day_month": "Jour et mois : %1$s",
-        "demo_date_full": "Date complète : %1$s",
-        "demo_date_time": "Heure : %1$s",
-        "demo_date_month": "Mois seul : %1$s",
-        "demo_date_relative": "Relatif : %1$s · %2$s"
+        "demo_date_day_month": "Jour et mois\u00a0: %1$s",
+        "demo_date_full": "Date complète\u00a0: %1$s",
+        "demo_date_time": "Heure\u00a0: %1$s",
+        "demo_date_month": "Mois seul\u00a0: %1$s",
+        "demo_date_relative": "Relatif\u00a0: %1$s · %2$s",
+        "demo_numbers_title": "Nombres",
+        "demo_number_plain": "Nombre\u00a0: %1$s",
+        "demo_number_compact": "Abrégé\u00a0: %1$s",
+        "demo_number_percent": "Pourcentage\u00a0: %1$s",
+        "demo_number_duration": "Durée\u00a0: %1$s"
     },
     "arrays": {
         "tv_categories": ["Films", "Séries", "Sport", "Enfants", "Musique"]
     },
     "plurals": {
         "new_movies": {
-            "one": "%d nouveau film",
-            "many": "%d de nouveaux films",
-            "other": "%d nouveaux films"
+            "one": "%1$s nouveau film",
+            "many": "%1$s de nouveaux films",
+            "other": "%1$s nouveaux films"
         },
         "time_left": {
-            "one": "Il reste %1$d minute de « %2$s »",
-            "many": "Il reste %1$d de minutes de « %2$s »",
-            "other": "Il reste %1$d minutes de « %2$s »"
+            "one": "Il reste %1$s minute de «\u00a0%2$s\u00a0»",
+            "many": "Il reste %1$s de minutes de «\u00a0%2$s\u00a0»",
+            "other": "Il reste %1$s minutes de «\u00a0%2$s\u00a0»"
         }
     }
 }

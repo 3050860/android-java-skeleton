@@ -23,21 +23,26 @@
         "demo_date_full": "Fecha completa: %1$s",
         "demo_date_time": "Hora: %1$s",
         "demo_date_month": "Mes solo: %1$s",
-        "demo_date_relative": "Relativo: %1$s · %2$s"
+        "demo_date_relative": "Relativo: %1$s · %2$s",
+        "demo_numbers_title": "Números",
+        "demo_number_plain": "Número: %1$s",
+        "demo_number_compact": "Abreviado: %1$s",
+        "demo_number_percent": "Porcentaje: %1$s",
+        "demo_number_duration": "Duración: %1$s"
     },
     "arrays": {
         "tv_categories": ["Películas", "Series", "Deportes", "Infantil", "Música"]
     },
     "plurals": {
         "new_movies": {
-            "one": "%d película nueva",
-            "many": "%d de películas nuevas",
-            "other": "%d películas nuevas"
+            "one": "%1$s película nueva",
+            "many": "%1$s de películas nuevas",
+            "other": "%1$s películas nuevas"
         },
         "time_left": {
-            "one": "Queda %1$d minuto de «%2$s»",
-            "many": "Quedan %1$d de minutos de «%2$s»",
-            "other": "Quedan %1$d minutos de «%2$s»"
+            "one": "Queda %1$s minuto de «%2$s»",
+            "many": "Quedan %1$s de minutos de «%2$s»",
+            "other": "Quedan %1$s minutos de «%2$s»"
         }
     }
 }

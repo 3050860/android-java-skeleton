@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<plurals name="new_movies">
-		<item quantity="one">%d new movie</item>
-		<item quantity="other">%d new movies</item>
+		<item quantity="one">%1$s new movie</item>
+		<item quantity="other">%1$s new movies</item>
 	</plurals>
 
 	<plurals name="time_left">
-		<item quantity="one">%1$d minute left in “%2$s”</item>
-		<item quantity="other">%1$d minutes left in “%2$s”</item>
+		<item quantity="one">%1$s minute left in “%2$s”</item>
+		<item quantity="other">%1$s minutes left in “%2$s”</item>
 	</plurals>
 </resources>

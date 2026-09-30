@@ -40,6 +40,13 @@ public class MainActivity extends AppCompatActivity {
 	private static final int RELATIVE_DEMO_PAST_DAYS = -1;
 	private static final int RELATIVE_DEMO_FUTURE_DAYS = 3;
 
+	/** Значения для демо чисел. 1 ч 30 мин — обход дробных чисел вместо «1,5 часа». */
+	private static final double NUMBER_DEMO_VALUE = 1234567.891;
+	private static final long COMPACT_DEMO_VALUE = 1234567;
+	private static final double PERCENT_DEMO_FRACTION = 0.45;
+	private static final int DURATION_DEMO_HOURS = 1;
+	private static final int DURATION_DEMO_MINUTES = 30;
+
 	private static int sInstance = 0;
 	private final int instanceId = ++sInstance;
 
@@ -54,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
 	private AppCompatDelegate viewPumpDelegate;
 	private Resources restringResources;
 	private Resources restringBaseResources;
+
+	/** Даты и числа выбранного языка; создаются при первом обращении, см. formats(). */
+	private LocaleFormats localeFormats;
 
 	private boolean isNativeMode() {
 		if (nativeMode == null) {
@@ -98,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
 		showPluralsDemo();
 		showWordOrderDemo();
 		showDatesDemo();
+		showNumbersDemo();
 
 		Log.d(TAG, "<<< [#" + instanceId + "] onCreate lang=" + MyApplication.getLanguage()
 				+ " nativeMode=" + isNativeMode()
@@ -139,13 +150,14 @@ public class MainActivity extends AppCompatActivity {
 	/**
 	 * «N новых фильмов» в нужной форме. Для 0 — отдельная строка: в en и es число 0
 	 * попадает в форму other («0 new movies»), а не в zero, поэтому «нет фильмов» так не написать.
-	 * Число передаётся дважды: первый раз — чтобы выбрать форму, второй — чтобы подставить в %d.
+	 * Число передаётся дважды: первый раз — чтобы выбрать форму, второй — уже отформатированным
+	 * по языку, для %1$s («1 000 000»).
 	 */
 	private String newMoviesText(int count) {
 		if (count == 0) {
 			return getString(R.string.no_new_movies);
 		}
-		return getResources().getQuantityString(R.plurals.new_movies, count, count);
+		return getResources().getQuantityString(R.plurals.new_movies, count, formats().number(count));
 	}
 
 	/**
@@ -164,11 +176,11 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	/**
-	 * «До конца «title» осталось N минут»: минуты — %1$d, название — %2$s.
-	 * Минуты передаются дважды: первый раз — чтобы выбрать форму, второй — как %1$d.
+	 * «До конца «title» осталось N минут»: минуты — %1$s, название — %2$s.
+	 * Минуты передаются дважды: первый раз — чтобы выбрать форму, второй — уже отформатированными.
 	 */
 	private String timeLeftText(int minutes, String title) {
-		return getResources().getQuantityString(R.plurals.time_left, minutes, minutes, title);
+		return getResources().getQuantityString(R.plurals.time_left, minutes, formats().number(minutes), title);
 	}
 
 	/**
@@ -176,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
 	 * Подписи — строки из ресурсов, сами даты строит ICU, в переводы они не попадают.
 	 */
 	private void showDatesDemo() {
-		LocaleFormats formats = new LocaleFormats(selectedLocale());
+		LocaleFormats formats = formats();
 		Date now = new Date();
 		String[] lines = {
 				getString(R.string.demo_date_day_month, formats.dayAndMonth(now)),
@@ -189,6 +201,31 @@ public class MainActivity extends AppCompatActivity {
 		};
 		TextView demoDates = findViewById(R.id.demoDates);
 		demoDates.setText(String.join("\n", lines));
+	}
+
+	/** Демо чисел через ICU: разделители, краткая запись, проценты и длительность по правилам языка. */
+	private void showNumbersDemo() {
+		LocaleFormats formats = formats();
+		String[] lines = {
+				getString(R.string.demo_number_plain, formats.number(NUMBER_DEMO_VALUE)),
+				getString(R.string.demo_number_compact, formats.compact(COMPACT_DEMO_VALUE)),
+				getString(R.string.demo_number_percent, formats.percent(PERCENT_DEMO_FRACTION)),
+				getString(R.string.demo_number_duration,
+						formats.duration(DURATION_DEMO_HOURS, DURATION_DEMO_MINUTES))
+		};
+		TextView demoNumbers = findViewById(R.id.demoNumbers);
+		demoNumbers.setText(String.join("\n", lines));
+	}
+
+	/**
+	 * Даты и числа выбранного языка. Создаются один раз на экземпляр активити:
+	 * язык за время его жизни не меняется, смена идёт через recreate().
+	 */
+	private LocaleFormats formats() {
+		if (localeFormats == null) {
+			localeFormats = new LocaleFormats(selectedLocale());
+		}
+		return localeFormats;
 	}
 
 	/** Локаль выбранного языка — та же, по которой Restring выбирает строки (AppLocaleProvider). */

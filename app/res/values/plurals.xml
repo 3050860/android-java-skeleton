@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="ru">
-	<!-- Демо множественного числа. %d — количество фильмов; для 0 есть отдельная строка no_new_movies.
-		 В ru форма one — это и 1, и 21, и 101, поэтому в ней %d, а не «1».
+	<!-- Демо множественного числа. %1$s — количество фильмов, уже отформатированное по языку («1 000 000»);
+		 для 0 есть отдельная строка no_new_movies.
+		 В ru форма one — это и 1, и 21, и 101, поэтому в ней %1$s, а не «1».
 		 other в ru выбирается только для дробных чисел. -->
 	<plurals name="new_movies">
-		<item quantity="one">%d новый фильм</item>
-		<item quantity="few">%d новых фильма</item>
-		<item quantity="many">%d новых фильмов</item>
-		<item quantity="other">%d нового фильма</item>
+		<item quantity="one">%1$s новый фильм</item>
+		<item quantity="few">%1$s новых фильма</item>
+		<item quantity="many">%1$s новых фильмов</item>
+		<item quantity="other">%1$s нового фильма</item>
 	</plurals>
 
-	<!-- Демо порядка слов: %1$d — минуты, %2$s — название фильма.
-		 В ru название стоит в начале, а глагол согласуется с числом (осталась / остались / осталось),
+	<!-- Демо порядка слов: %1$s — минуты (отформатированное число), %2$s — название фильма.
+		 В ru название стоит в начале, а глагол и существительное согласуются с числом
+		 (осталась 1 минута / осталось 2 минуты / осталось 5 минут),
 		 поэтому вся фраза — одна строка, а не «До конца» + название + число. -->
 	<plurals name="time_left">
-		<item quantity="one">До конца «%2$s» осталась %1$d минута</item>
-		<item quantity="few">До конца «%2$s» осталось %1$d минуты</item>
-		<item quantity="many">До конца «%2$s» осталось %1$d минут</item>
-		<item quantity="other">До конца «%2$s» осталось %1$d минуты</item>
+		<item quantity="one">До конца «%2$s» осталась %1$s минута</item>
+		<item quantity="few">До конца «%2$s» осталось %1$s минуты</item>
+		<item quantity="many">До конца «%2$s» осталось %1$s минут</item>
+		<item quantity="other">До конца «%2$s» осталось %1$s минуты</item>
 	</plurals>
 </resources>

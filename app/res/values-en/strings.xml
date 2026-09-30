@@ -25,4 +25,9 @@
 	<string name="demo_date_time">Time: %1$s</string>
 	<string name="demo_date_month">Month alone: %1$s</string>
 	<string name="demo_date_relative">Relative: %1$s · %2$s</string>
+	<string name="demo_numbers_title">Numbers</string>
+	<string name="demo_number_plain">Number: %1$s</string>
+	<string name="demo_number_compact">Compact: %1$s</string>
+	<string name="demo_number_percent">Percent: %1$s</string>
+	<string name="demo_number_duration">Duration: %1$s</string>
 </resources>
